@@ -1,0 +1,22 @@
+{
+  "name": "app4",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Daham Drake Wang <drakewang@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/yochess/todo_angular",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-ui-router": "^0.3.1"
+  }
+}
