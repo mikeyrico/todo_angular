@@ -16,4 +16,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       controller: 'RegisterCtrl',
       controllerAs: 'register'
     })
+    .state('todo', {
+      url: '/todo',
+      templateUrl: './client/todo/todo.html',
+      controller: 'TodoCtrl',
+      controllerAs: 'todo'
+    })
 }]);

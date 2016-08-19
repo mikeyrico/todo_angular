@@ -5,12 +5,17 @@
   <script src="./lib/angular-ui-router/release/angular-ui-router.min.js"></script>
 
   <script src="./client/app.js"></script>
+  <script src="./client/auth/auth.service.js"></script>
   <script src="./client/auth/auth.controller.js"></script>
+  <script src="./client/todo/todo.controller.js"></script>
+
   <title>Angular Todo App</title>
 </head>
 <body>
+  <a ui-sref="login">Login</a>
+  <a ui-sref="register">Register</a>
+  <a ui-sref="todo">Todo</a>
   <h1>TESTING APP</h1>
   <div ui-view></div>
-  <a ui-sref="login">Login</a>
 </body>
 </html>
