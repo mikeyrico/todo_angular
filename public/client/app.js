@@ -20,6 +20,31 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       url: '/todo',
       templateUrl: './client/todo/todo.html',
       controller: 'TodoCtrl',
-      controllerAs: 'todo'
+      controllerAs: 'todo',
+      authenticate: true
     })
+    .state('logout', {
+      url: '/logout',
+      controller: 'LogoutCtrl'
+    })
+}])
+.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth, $window) {
+    console.log('running run >>>>>>>>>>>');
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      console.log('running statechange');
+      console.log('toStates auth method:', toState.authenticate);
+      console.log('result of isAuth:', Auth.isAuth());
+    // if (toState.authenticate && !Auth.isAuth()) {
+    //   console.log('authenticated');
+    //   $state.transition('login');
+    //   event.preventDefault();
+    // }
+    Auth.isAuth()
+      .then(function(bool) {
+        if (!bool) {
+          $state.transitionTo('login');
+          event.preventDefault();
+        }
+      });
+  });
 }]);

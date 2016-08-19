@@ -1,5 +1,5 @@
 angular.module('todoApp')
-  .controller('LoginCtrl', ['$scope', 'Auth', function($scope, Auth) {
+  .controller('LoginCtrl', ['$scope', 'Auth', '$state', $window, function($scope, Auth, $state, $window) {
     var login = this;
     login.user = {};
 
@@ -7,16 +7,19 @@ angular.module('todoApp')
     login.submit = function() {
       Auth.login(login.user)
         .then(function(res) {
-          console.log(res);
+          if (res.status === 200) {
+            $window.localStorage.isLoggedin = true;
+            $state.go('todo');
+          }
         })
         .catch(function(err) {
-          console.log(err);
-        })
+          $state.go('login');
+        });
     }
 
 
   }])
-  .controller('RegisterCtrl', ['$scope', 'Auth', function($scope, Auth) {
+  .controller('RegisterCtrl', ['$scope', 'Auth', '$state', function($scope, Auth, $state) {
     var register = this;
     register.user = {};
 
@@ -25,6 +28,9 @@ angular.module('todoApp')
       Auth.register(register.user)
         .then(function(res) {
           console.log(res);
+          if (res.status === 200) {
+            $state.go('todo');
+          }
         })
         .catch(function(err) {
           console.log(err);
@@ -32,4 +38,7 @@ angular.module('todoApp')
     }
 
 
+  }])
+  .controller('LogoutCtrl', ['Auth', function(Auth) {
+    Auth.logout();
   }]);

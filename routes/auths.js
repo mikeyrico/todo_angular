@@ -49,6 +49,18 @@ router
   })
   .post('/login', passport.authenticate('local-login'), function(req, res) {
     res.send(200);
+  })
+  .get('/logout', function(req, res) {
+    req.logout();
+    res.send(200);
+  })
+  .get('/checkauth', function(req, res) {
+    console.log('<><><> calling check auth')
+    console.log(req.isAuthenticated());
+    if (req.isAuthenticated()) {
+      return res.send(200);
+    }
+    return res.send(404);
   });
 
 module.exports = router;
