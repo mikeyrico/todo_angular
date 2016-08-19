@@ -26,7 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  secret: 'dwerqwe'
+  secret: 'dwerqwe',
+  cookie: {
+    expires: new Date(Date.now() + 5000)
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());

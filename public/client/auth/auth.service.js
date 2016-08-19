@@ -15,6 +15,7 @@ angular.module('todoApp')
       })
       .then(function(res) {
         console.log('successfully logged out');
+        $window.localStorage.setItem('isLoggedin', 'false');
         $state.go('login');
       });
     };
@@ -28,21 +29,8 @@ angular.module('todoApp')
     };
 
     var isAuth = function() {
-      return $http({
-        method: 'GET',
-        url: 'auth/checkauth'
-      })
-      .then(function(res) {
-        console.log('>>>>', res);
-        if (res.status === 200) {
-          return true;
-        }
-        return false;
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-    }
+      return $window.localStorage.getItem('isLoggedin');
+    };
 
     return {
       login: login,

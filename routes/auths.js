@@ -57,6 +57,7 @@ router
   .get('/checkauth', function(req, res) {
     console.log('<><><> calling check auth')
     console.log(req.isAuthenticated());
+    console.log(req.session)
     if (req.isAuthenticated()) {
       return res.send(200);
     }

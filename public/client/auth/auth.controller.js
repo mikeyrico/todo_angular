@@ -1,5 +1,5 @@
 angular.module('todoApp')
-  .controller('LoginCtrl', ['$scope', 'Auth', '$state', $window, function($scope, Auth, $state, $window) {
+  .controller('LoginCtrl', ['$scope', 'Auth', '$state', '$window', function($scope, Auth, $state, $window) {
     var login = this;
     login.user = {};
 
@@ -8,7 +8,7 @@ angular.module('todoApp')
       Auth.login(login.user)
         .then(function(res) {
           if (res.status === 200) {
-            $window.localStorage.isLoggedin = true;
+            $window.localStorage.setItem('isLoggedin', true);
             $state.go('todo');
           }
         })

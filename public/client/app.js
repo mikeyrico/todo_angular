@@ -28,23 +28,30 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
       controller: 'LogoutCtrl'
     })
 }])
-.run(['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth, $window) {
-    console.log('running run >>>>>>>>>>>');
+.run(['$rootScope', '$state', 'Auth', '$http', '$window', function($rootScope, $state, Auth, $http, $window) {
+  $http({
+    method: 'GET',
+    url: '/auth/checkauth'
+  })
+    .then(function(res) {
+      console.log('going into chck auth ', res);
+      if (res.status !== 200) {
+        $window.localStorage.setItem('isLoggedin', false);
+      }
+    })
+    .catch(function(err) {
+      console.log(40404040404)
+        $window.localStorage.setItem('isLoggedin', false);
+    });
+
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      console.log('running statechange');
-      console.log('toStates auth method:', toState.authenticate);
-      console.log('result of isAuth:', Auth.isAuth());
-    // if (toState.authenticate && !Auth.isAuth()) {
-    //   console.log('authenticated');
-    //   $state.transition('login');
-    //   event.preventDefault();
-    // }
-    Auth.isAuth()
-      .then(function(bool) {
-        if (!bool) {
-          $state.transitionTo('login');
-          event.preventDefault();
-        }
-      });
+      // console.log('running statechange');
+      // console.log('toStates auth method:', toState.authenticate);
+      // console.log('result of isAuth:', Auth.isAuth() === 'false');
+    if (toState.authenticate && Auth.isAuth() === 'false') {
+      $state.transitionTo('login');
+      event.preventDefault();
+    }
   });
+
 }]);
