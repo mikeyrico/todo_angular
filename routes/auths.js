@@ -59,9 +59,9 @@ router
     console.log(req.isAuthenticated());
     console.log(req.session)
     if (req.isAuthenticated()) {
-      return res.send(200);
+      return res.send(true);
     }
-    return res.send(404);
+    return res.send(false);
   });
 
 module.exports = router;

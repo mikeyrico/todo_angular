@@ -35,23 +35,24 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   })
     .then(function(res) {
       console.log('going into chck auth ', res);
-      if (res.status !== 200) {
+      if (!res.data) {
         $window.localStorage.setItem('isLoggedin', false);
       }
     })
+    .then(function() {
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+          console.log('running statechange');
+          // console.log('toStates auth method:', toState.authenticate);
+          // console.log('result of isAuth:', Auth.isAuth() === 'false');
+        if (toState.authenticate && Auth.isAuth() === 'false') {
+          $state.transitionTo('login');
+          event.preventDefault();
+        }
+      });
+    })
     .catch(function(err) {
-      console.log(40404040404)
-        $window.localStorage.setItem('isLoggedin', false);
+      console.log('error', err);
+        // $window.localStorage.setItem('isLoggedin', false);
     });
-
-  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      // console.log('running statechange');
-      // console.log('toStates auth method:', toState.authenticate);
-      // console.log('result of isAuth:', Auth.isAuth() === 'false');
-    if (toState.authenticate && Auth.isAuth() === 'false') {
-      $state.transitionTo('login');
-      event.preventDefault();
-    }
-  });
 
 }]);
